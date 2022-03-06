@@ -15,6 +15,7 @@ requirements = [
     'keyname>=0.4.1',
     'nbmetalog>=0.2.5',
     'papermill[all]>=2.3.4',
+    'python-slugify>=6.1.1',
 ]
 
 setup_requirements = ['pytest-runner', ]

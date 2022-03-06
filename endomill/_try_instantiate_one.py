@@ -5,6 +5,7 @@ from nbmetalog import nbmetalog as nbm
 import papermill
 from pathlib import Path
 import shutil
+from slugify import slugify
 import tempfile
 import typing
 
@@ -31,7 +32,10 @@ def _try_instantiate_one(parameter_pack: typing.Dict) -> None:
 
         if not new_notebook_paths:
             new_notebook_path = kn.pack({
-                **parameter_pack,
+                **{
+                    slugify(str(k)): slugify(str(v))
+                    for k, v in parameter_pack.items()
+                },
                 **{
                     'ext': '.endomill.ipynb',
                 },
