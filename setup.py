@@ -11,10 +11,10 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'IPython>=7.3.8'
-    'keyname>=0.4.1'
-    'nbmetalog>=0.2.5'
-    'papermill[all]>=2.3.4'
+    'IPython>=7.3.8',
+    'keyname>=0.4.1',
+    'nbmetalog>=0.2.5',
+    'papermill[all]>=2.3.4',
 ]
 
 setup_requirements = ['pytest-runner', ]
