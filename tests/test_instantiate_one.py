@@ -27,7 +27,7 @@ def test_intantiate_one():
     assert exists('parameter=value+ext=.endomill.ipynb')
 
     # post cleanup
-    unlink_missing_ok('failed.endomill.ipynb')
+    unlink_missing_ok('parameter=value+ext=.endomill.ipynb')
 
 
 def test_intantiate_one_fail():
