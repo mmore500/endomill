@@ -2,7 +2,7 @@
 
 __author__ = """Matthew Andres Moreno"""
 __email__ = 'm.more500@gmail.com'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 from .add_instance_outpath import add_instance_outpath
 from .in_interactive_notebook import in_interactive_notebook
