@@ -1,5 +1,6 @@
 import glob
 from IPython.core.display import display, HTML
+import itertools as it
 from keyname import keyname as kn
 from nbmetalog import nbmetalog as nbm
 import papermill
@@ -40,10 +41,23 @@ def _try_instantiate_one(parameter_pack: typing.Dict) -> None:
                     'ext': '.endomill.ipynb',
                 },
             })
-            shutil.copy(
-                f'{temp_dir}/executing.endomill.ipynb',
-                new_notebook_path,
-            )
+            try:
+                shutil.copy(
+                    f'{temp_dir}/executing.endomill.ipynb',
+                    new_notebook_path,
+                )
+            except OSError:
+                # filename too long
+                for i in it.count():
+                    fallback = f'fallback{i}.endomill.ipynb'
+                    if not Path(fallback).exists():
+                        new_notebook_path = fallback
+                        shutil.copy(
+                            f'{temp_dir}/executing.endomill.ipynb',
+                            fallback,
+                        )
+                        break
+
             new_notebook_paths = {new_notebook_path}
 
         assert new_notebook_paths
