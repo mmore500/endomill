@@ -38,7 +38,7 @@ def test_intantiate_over():
         unlink_missing_ok(expected_output)
 
 
-def test_intantiate_over_fai():
+def test_intantiate_over_fail():
     expected_outputs = [
         'parameter=value1+ext=.endomill.ipynb',
         'parameter=value2+ext=.endomill.ipynb',
