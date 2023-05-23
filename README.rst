@@ -32,7 +32,7 @@ Here's what cells from a notebook using endomill might look like.
   import endomill
 
 
-Instantiate & execute this two copies of this notebook.
+Instantiate & execute two copies of this notebook.
 
 .. code-block:: python3
 
