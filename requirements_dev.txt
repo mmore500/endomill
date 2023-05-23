@@ -212,6 +212,7 @@ nbmetalog==0.2.6
     # via -r requirements_dev.in
 nest-asyncio==1.5.4
     # via
+    #   -r requirements_dev.in
     #   ipykernel
     #   jupyter-client
     #   nbclient

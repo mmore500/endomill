@@ -16,6 +16,7 @@ requirements = [
     'nbmetalog>=0.2.5',
     'papermill[all]>=2.3.4',
     'python-slugify>=6.1.1',
+    'nest-asyncio>=1.5.4',
 ]
 
 setup_requirements = ['pytest-runner', ]

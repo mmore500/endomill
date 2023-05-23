@@ -8,7 +8,8 @@ from endomill._unlink_missing_ok import unlink_missing_ok
 
 def test_instance_outpath():
     # pre cleanup
-    unlink_missing_ok('executing.endomill.ipynb')
+    worker_id = 0
+    unlink_missing_ok(f'executing{worker_id}.endomill.ipynb')
     unlink_missing_ok('failed.endomill.ipynb')
     unlink_missing_ok('instance_outpath.endomill.ipynb')
     unlink_missing_ok('parameter=value+ext=.endomill.ipynb')
@@ -21,10 +22,12 @@ def test_instance_outpath():
         as_version=4,
     )
     client = NotebookClient(nb)
+    print("before executing")
     client.execute()
+    print("executing")
 
     assert exists('instance_outpath.endomill.ipynb')
-    assert not exists('executing.endomill.ipynb')
+    assert not exists(f'executing{worker_id}.endomill.ipynb')
     assert not exists('failed.endomill.ipynb')
     assert not exists('parameter=value+ext=.endomill.ipynb')
 

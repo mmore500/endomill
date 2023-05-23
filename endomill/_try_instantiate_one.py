@@ -12,20 +12,36 @@ import typing
 
 from .in_interactive_notebook import in_interactive_notebook
 
+import multiprocessing
 
-def _try_instantiate_one(parameter_pack: typing.Dict) -> None:
+def _try_instantiate_one(
+    parameter_pack: typing.Dict,
+    worker_id: int = 0,
+) -> None:
 
     before_notebook_paths = {*glob.glob('*.ipynb')}
-    Path('executing.endomill.ipynb').touch()
-    papermill.execute_notebook(
-        nbm.get_notebook_path(),
-        'executing.endomill.ipynb',
-        parameters=parameter_pack,
-        progress_bar=in_interactive_notebook(),
-    )
+    Path(f'executing{worker_id}.endomill.ipynb').touch()
+    def task():
+        papermill.execute_notebook(
+            nbm.get_notebook_path(),
+            f'executing{worker_id}.endomill.ipynb',
+            parameters=parameter_pack,
+            progress_bar=in_interactive_notebook(),
+        )
+    x = multiprocessing.Process(target=task)
+    # https://stackoverflow.com/a/28491804
+    # x.daemon = False
+    x.start()
+    x.join()
+    # papermill.execute_notebook(
+    #     nbm.get_notebook_path(),
+    #     f'executing{worker_id}.endomill.ipynb',
+    #     parameters=parameter_pack,
+    #     progress_bar=in_interactive_notebook(),
+    # )
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        shutil.move('executing.endomill.ipynb', temp_dir)
+        shutil.move(f'executing{worker_id}.endomill.ipynb', temp_dir)
 
         after_notebook_paths = {*glob.glob('*.ipynb')}
         new_notebook_paths \
@@ -43,7 +59,7 @@ def _try_instantiate_one(parameter_pack: typing.Dict) -> None:
             })
             try:
                 shutil.copy(
-                    f'{temp_dir}/executing.endomill.ipynb',
+                    f'{temp_dir}/executing{worker_id}.endomill.ipynb',
                     new_notebook_path,
                 )
             except OSError:
@@ -53,7 +69,7 @@ def _try_instantiate_one(parameter_pack: typing.Dict) -> None:
                     if not Path(fallback).exists():
                         new_notebook_path = fallback
                         shutil.copy(
-                            f'{temp_dir}/executing.endomill.ipynb',
+                            f'{temp_dir}/executing{worker_id}.endomill.ipynb',
                             fallback,
                         )
                         break

@@ -9,4 +9,6 @@ def add_instance_outpath(outpath: str) -> None:
 
     @atexit.register
     def add_instance_outpath_callback():
-        shutil.copy('executing.endomill.ipynb', outpath)
+        # manual outpath only compatible with worker_id
+        worker_id = 0
+        shutil.copy(f'executing{worker_id}.endomill.ipynb', outpath)
